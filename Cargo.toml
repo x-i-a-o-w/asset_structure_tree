@@ -14,3 +14,7 @@ include = [
     "README.md",
 ]
 [dependencies]
+
+[lib]
+crate-type = ["cdylib"]
+bench=false
