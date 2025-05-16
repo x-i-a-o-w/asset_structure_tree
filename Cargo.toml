@@ -2,5 +2,15 @@
 name = "asset_structure"
 version = "0.1.0"
 edition = "2024"
-
+description = "minimal asset structure tree for projects"
+license = "MIT"
+license-file = "LICENSE"
+keywords = ["filesystem","dir"]
+documentation = "https://docs.rs/asset_structure"
+repository = "https://github.com/x-i-a-o-w/asset_structure"
+include = [
+    "Cargo.toml",
+    "LICENSE",
+    "README.md",
+]
 [dependencies]
