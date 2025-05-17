@@ -13,16 +13,22 @@ include = [
     "README.md",
 	"examples",
 ]
-[dependencies]
-
 [lib]
 name="asset_structure"
 path="src/lib.rs"
+test = true            
+doctest = true         
 bench = true           
 doc = true             
 proc-macro = false     
-crate-type=["lib"]
+harness = true         
+crate-type = ["lib"]   
+required-features = [] 
+
 
 [[example]]
 name="hello_file"
 path = "examples/hello_file.rs"
+[dependencies]
+
+
