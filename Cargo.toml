@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2024"
 description = "minimal asset structure tree for projects"
 license = "MIT"
-license-file = "LICENSE"
 keywords = ["filesystem","dir"]
 documentation = "https://docs.rs/asset_structure"
 repository = "https://github.com/x-i-a-o-w/asset_structure"
@@ -12,9 +11,14 @@ include = [
     "Cargo.toml",
     "LICENSE",
     "README.md",
+	"examples",
 ]
 [dependencies]
 
 [lib]
-crate-type = ["cdylib"]
-bench=false
+name="asset_structure"
+path="src/lib.rs"
+
+[[example]]
+name="hello_file"
+path = "examples/hello_file.rs"

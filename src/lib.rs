@@ -5,22 +5,22 @@ type Dir = fs::ReadDir;
 
 type AssetEntry = AssetStructure;
 
-struct AssetStructure {
+pub struct AssetStructure {
     local: AssetBranch,
     children: Vec<AssetEntry>,
 }
 
 impl AssetStructure {
-    fn new<P: AsRef<Path>>(path: P) -> AssetStructure {
+    pub fn new<P: AsRef<Path>>(path: P) -> AssetStructure {
         AssetStructure {
             local: AssetBranch::new(path),
             children: Vec::new(),
         }
     }
-    fn get_local<P: AsRef<Path>>(&self, path: P) -> Result<PathBuf, Error> {
+    pub fn get_local<P: AsRef<Path>>(&self, path: P) -> Result<PathBuf, Error> {
         self.local.get(path)
     }
-    fn get_global<P: AsRef<Path>>(&self, path: P) -> Result<Vec<PathBuf>, Error> {
+    pub fn get_global<P: AsRef<Path>>(&self, path: P) -> Result<Vec<PathBuf>, Error> {
         let mut matches = Vec::new();
         if let Ok(r) = self.local.get(path) {
             matches.push(r);
@@ -30,7 +30,6 @@ impl AssetStructure {
         }
         Ok(matches)
     }
-
     fn get_global_recursive<P: AsRef<Path>>(
         &self,
         path: P,
@@ -61,13 +60,13 @@ impl AsRef<Path> for AssetStructure {
     }
 }
 
-struct AssetBranch {
+pub struct AssetBranch {
     path: Box<Path>,
     dir: Option<Dir>,
     alive: bool,
 }
 impl AssetBranch {
-    fn new<P: AsRef<Path>>(path: P) -> AssetBranch {
+    pub fn new<P: AsRef<Path>>(path: P) -> AssetBranch {
         let dir = if let Ok(r) = fs::read_dir(&path) {
             Some(r)
         } else {
@@ -79,15 +78,15 @@ impl AssetBranch {
             alive: path.as_ref().exists(),
         }
     }
-    fn get<P: AsRef<Path>>(&self, path: P) -> Result<PathBuf, Error> {
-        if self.is_alive() {
+    pub fn get<P: AsRef<Path>>(&self, path: P) -> Result<PathBuf, Error> {
+        if !self.is_alive() {
             return Err(Error::new(
                 ErrorKind::NotAlive,
                 &format!("This branch is not alive: {:?}", self.path),
             ));
         }
         let get_path = self.path.join(path);
-        if get_path.exists() {
+        if !get_path.exists() {
             return Err(Error::new(
                 ErrorKind::NotFound,
                 &format!("This branch was not found: {:?}", get_path),
@@ -111,25 +110,26 @@ impl Asset for AssetBranch {
         self.alive
     }
 }
-
-struct Error {
+#[derive(Debug)]
+pub struct Error {
     msg: Box<str>,
     kind: ErrorKind,
 }
 impl Error {
-    fn new(kind: ErrorKind, msg: &str) -> Error {
+    pub fn new(kind: ErrorKind, msg: &str) -> Error {
         Error {
             kind,
             msg: Box::from(msg),
         }
     }
 }
-enum ErrorKind {
+#[derive(Debug)]
+pub enum ErrorKind {
     NotFound,
     NotAlive,
 }
 
-trait Asset {
+pub trait Asset {
     fn get_path(&self) -> &Path;
     fn is_alive(&self) -> bool;
 }
