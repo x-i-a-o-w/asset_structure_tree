@@ -1,6 +1,6 @@
 [package]
 name = "asset_structure"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "minimal asset structure tree for projects"
 license = "MIT"
