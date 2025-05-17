@@ -1,6 +1,6 @@
 [package]
 name = "asset_structure"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 description = "minimal asset structure tree for projects"
 license = "MIT"
@@ -8,6 +8,7 @@ keywords = ["filesystem","dir"]
 # documentation = "https://docs.rs/asset_structure"
 repository = "https://github.com/x-i-a-o-w/asset_structure"
 include = [
+    "src/*",
     "Cargo.toml",
     "LICENSE",
     "README.md",
